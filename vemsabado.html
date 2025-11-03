@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GUSTAVO'S HALLOWEEN</title>
+    <link rel="icon" href="imagens/icone.png" type="image/png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nosifer&display=swap');
+        body {
+            background: url("imagens/background.gif") no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            font-family: 'Nosifer', cursive;
+            text-align: center;
+            padding: 50px;
+        }
+        .contador {
+            font-size: 40px;
+            margin-top: 30px;
+            font-size: 44px;
+            text-shadow: 0px 0px 10px red, 0px 0px 25px red;
+        }
+
+        p, span, div, h1, h2, h3, h4, h5, h6 {
+        text-shadow: 0px 0px 10px black, 0px 0px 25px black, 0px 0px 40px black;
+    }
+    .brilho-img {
+    filter: drop-shadow(0 0 5px white)
+            drop-shadow(0 0 15px white)
+            drop-shadow(0 0 30px white);
+}
+    </style>
+</head>
+<body>
+    <img src="imagens/icone.png" width="20%" height="20%" class="brilho-img">
+    <h1>Já pode ir pro castelo do Gustavo?</h1>
+    <h2>Faltam:</h2>
+    <div class="contador" id="contador">Carregando...</div>
+
+    <script>
+        function atualizarContagem() {
+            const agora = new Date();
+            const diaDaSemana = agora.getDay(); // 0=Domingo, 6=Sábado
+
+            let proximoSabado = new Date();
+            proximoSabado.setDate(agora.getDate() + ((6 - diaDaSemana + 7) % 7));
+
+            if (diaDaSemana === 6 && agora.getHours() + agora.getMinutes()/60 > 0) {
+                proximoSabado.setDate(proximoSabado.getDate() + 7);
+            }
+
+            proximoSabado.setHours(0, 0, 0, 0);
+
+            const diferenca = proximoSabado - agora;
+
+            const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diferenca / (1000 * 60 * 60)) % 24);
+            const minutos = Math.floor((diferenca / (1000 * 60)) % 60);
+            const segundos = Math.floor((diferenca / 1000) % 60);
+
+            document.getElementById("contador").innerHTML =
+                `${dias} dias, ${horas} horas, ${minutos} min, ${segundos} s`;
+        }
+
+        setInterval(atualizarContagem, 1000);
+        atualizarContagem();
+    </script>
+
+</body>
+</html>
